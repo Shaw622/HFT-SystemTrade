@@ -10,14 +10,12 @@ n225 = pdr.DataReader('NIKKEI225', 'fred', '1949/5/16', end).dropna()
 lnn225 = np.log(n225.dropna())
 lnn225.columns = ['Close']
 
-y = lnn225
-x = range(len(lnn225))
+y = lnn225.ix['1986/12/1':'1989/12/31'].dropna()
+x = range(len(y))
 x = sm.add_constant(x)
 model = sm.OLS(y, x)
 results = model.fit()
 
-plt.plot(y, label='Close', color='darkgray')
-results.fittedvalues.plot(label='prediction', style='--') # t時の予測値or期待値
-plt.ylabel('log(n225 index)')
-plt.legend(loc='upper left')
+results.resid.plot(color='seagreen') #残差項を取り出す
+plt.ylabel('residual')
 plt.show()

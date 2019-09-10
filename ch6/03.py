@@ -16,8 +16,7 @@ x = sm.add_constant(x)
 model = sm.OLS(y, x)
 results = model.fit()
 
-plt.plot(y, label='Close', color='darkgray')
-results.fittedvalues.plot(label='prediction', style='--') # t時の予測値or期待値
-plt.ylabel('log(n225 index)')
-plt.legend(loc='upper left')
+results.resid.plot(color='seagreen') #残差項を取り出す
+plt.ylabel('residual')
 plt.show()
+
